@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>video</title>
+</head>
+<body>
+    
+    <div id="set-height"></div>
+
+    <video src="video.mp4" id="v0" tabindex="0", autobuffer preload></video>
+    <script src="sticky.js"></script>
+
+    <style>
+        body {
+            background-color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        #v0 {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #set-height {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+
+    <script>
+
+        var frameNumber = 0, 
+        playbackConst = 2000, 
+        setHeight = document.getElementById("set-height"), 
+        vid = document.getElementById('v0'); 
+
+        vid.addEventListener('loadedmetadata', function() {
+            setHeight.style.height = vid.duration * playbackConst + "px";
+        });
+
+        function scrollPlay(){  
+            var frameNumber  = window.pageYOffset/playbackConst;
+            vid.currentTime  = frameNumber ;
+            window.requestAnimationFrame(scrollPlay);
+        }
+
+        window.requestAnimationFrame(scrollPlay);
+    
+    </script>
+</body>
+</html>
